@@ -1,0 +1,40 @@
+# yml file for running tests, build the image and host it on the docker hub
+
+name: Pytest Docker Image CI
+on:
+    push:
+        branches: [ master ]
+    pull_request:
+        branches: [ master ]
+    
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout the repository
+              uses: actions/checkout@v2
+            
+            - name: Set up Python
+              uses: actions/setup-python@v2
+              with:
+                python-version: 3.x
+
+            - name: Install dependencies
+              run: pip install -r requirements.txt
+
+            - name: Run tests and build the image
+              run: |
+                python -m pytest -v || exit 1
+
+                docker build -t ${{ secrets.DOCKER_USERNAME }}/pytest-docker-image:latest .
+
+                docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+                docker push ${{ secrets.DOCKER_USERNAME }}/pytest-docker-image:latest
+
+            
+
+            
+
+
+
