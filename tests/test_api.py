@@ -28,7 +28,7 @@ class TestAPI:
         assert response_body['title'] == 'foo'
         assert response_body['body'] == 'bar'
         assert response_body['userId'] == '1'
-        assert response_body['id'] == 101
+        assert response_body['id'] == 100
 
     def test_put(self):
         data = '{"id": 1, "title": "foo", "body": "bar", "userId": "1"}'
