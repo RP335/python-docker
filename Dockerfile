@@ -1,25 +1,27 @@
-# Use Ubuntu as the base image
+# Use a Linux distribution as the base image (e.g., Ubuntu)
 FROM ubuntu:latest
 
-# Install dependencies
+# Install required dependencies
 RUN apt-get update && \
-    apt-get install -y \
-    software-properties-common \
-    build-essential \
-    libssl-dev \
-    libffi-dev \
-    python3 \
-    python3-pip \
-    curl \
-    git \
-    jq \
-    iputils-ping \
-    && rm -rf /var/lib/apt/lists/*
+    apt-get install -y curl sudo && \
+    rm -rf /var/lib/apt/lists/*
 
-# Install GitHub Actions runner
-WORKDIR /runner
-RUN curl -o actions-runner-linux-x64.tar.gz -L https://github.com/actions/runner/releases/download/v2.278.0/actions-runner-linux-x64-2.278.0.tar.gz && \
-    tar xzf actions-runner-linux-x64.tar.gz && \
+# Create a non-root user (replace 'runner' with your desired username)
+RUN useradd -m runner && \
+    echo "runner ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/runner && \
+    chmod 0440 /etc/sudoers.d/runner
+
+# Switch to the non-root user
+USER runner
+
+# Set the working directory
+WORKDIR /home/runner
+
+# Download and configure the GitHub Actions runner
+RUN mkdir actions-runner && \
+    cd actions-runner && \
+    curl -O -L https://github.com/actions/runner/releases/download/v2.283.1/actions-runner-linux-x64-2.283.1.tar.gz && \
+    tar xzf ./actions-runner-linux-x64-2.283.1.tar.gz && \
     ./bin/installdependencies.sh
 
 # Entrypoint
