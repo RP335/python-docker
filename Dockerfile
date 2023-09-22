@@ -25,8 +25,7 @@ WORKDIR /home/runner
 RUN mkdir actions-runner && \
     cd actions-runner && \
     curl -O -L https://github.com/actions/runner/releases/download/v2.309.0/actions-runner-linux-x64-2.309.0.tar.gz && \
-    tar xzf ./actions-runner-linux-x64-2.309.0.tar.gz && \
-    ./bin/installdependencies.sh
+    tar xzf ./actions-runner-linux-x64-2.309.0.tar.gz
 
 # Entrypoint (adjust the registration token and repository URL)
 CMD ["./config.sh", "--url", "$REPO_URL", "--token", "$GITHUB_TOKEN", "--name", "$RUNNER_NAME", "--work", "_work"]
