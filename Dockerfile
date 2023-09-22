@@ -17,3 +17,4 @@ RUN mkdir actions-runner && \
 
 # Entrypoint
 CMD ["./config.sh", "--url", $REPO_URL, "--token", $GITHUB_TOKEN, "--name", $RUNNER_NAME, "--work", "_work"]
+CMD ["./run.sh"]
