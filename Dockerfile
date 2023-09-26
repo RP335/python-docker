@@ -5,9 +5,9 @@ FROM ubuntu:20.04
 ARG RUNNER_VERSION
 ENV DEBIAN_FRONTEND=noninteractive
 
-LABEL Author="Ajay Veeraveni"
-LABEL Email="ajayveeraveni119@gmail.com"
-LABEL GitHub="https://github.com/ajayAlways"
+LABEL Author="RP"
+LABEL Email="rahul.peter@gmail.com"
+LABEL GitHub="https://github.com/RP335"
 LABEL BaseImage="ubuntu:20.04"
 LABEL RunnerVersion=${RUNNER_VERSION}
 
